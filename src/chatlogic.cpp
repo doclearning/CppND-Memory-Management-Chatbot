@@ -21,7 +21,7 @@ ChatLogic::ChatLogic()
     _chatBot = new ChatBot("../images/chatbot.png");
 
     // add pointer to chatlogic so that chatbot answers can be passed on to the GUI
-    _chatBot->SetChatLogicHandle(this);
+    _chatBot->SetChatLogicHandle(this); //JAQ_ISSUE: This seems weird to throw around the raw pointer here. I don't like it.
 
     ////
     //// EOF STUDENT CODE
@@ -33,6 +33,10 @@ ChatLogic::~ChatLogic()
     ////
 
     // delete chatbot instance
+    //JAQ_ISSUE: if chatlogic is constructing _chatbot, it should also destruct it
+    //This may need rethinking if ownership is passed to nodes with a unique_ptr
+    //In each node, possibly switch to if unique_ptr.valid() -> destroy
+    //probably also means that _chatbout should be created in the root node
     delete _chatBot;
 
     // delete all nodes
@@ -75,6 +79,8 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
 {
     // load file with answer graph elements
     std::ifstream file(filename);
+
+    std::cout << "LoadAnswerGraphFromFile - start\n";
 
     // check for file availability and process it line by line
     if (file)
@@ -192,6 +198,8 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
         std::cout << "File could not be opened!" << std::endl;
         return;
     }
+
+    
 
     //// STUDENT CODE
     ////

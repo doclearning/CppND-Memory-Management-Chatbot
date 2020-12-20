@@ -15,6 +15,8 @@ private:
     //// STUDENT CODE
     ////
 
+    //JAQ_ISSUE: These child edges will be owned by a graphnode. Currently handled in chatlogic?
+
     // data handles (owned)
     std::vector<GraphEdge *> _childEdges;  // edges to subsequent nodes
 

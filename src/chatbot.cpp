@@ -9,24 +9,15 @@
 #include "chatbot.h"
 
 // constructor WITHOUT memory allocation
-ChatBot::ChatBot()
-{
-    // invalidate data handles
-    _image = nullptr;
-    _chatLogic = nullptr;
-    _rootNode = nullptr;
-}
+ChatBot::ChatBot() : _image(NULL), _chatLogic(nullptr), _rootNode(nullptr) {
+
+    std::cout << "Initialising default constructor" << "\n";
+};
 
 // constructor WITH memory allocation
-ChatBot::ChatBot(std::string filename)
+ChatBot::ChatBot(std::string filename) : _chatLogic(nullptr), _rootNode(nullptr)
 {
-    std::cout << "ChatBot Constructor" << std::endl;
-    
-    // invalidate data handles
-    _chatLogic = nullptr;
-    _rootNode = nullptr;
-
-    // load image into heap memory
+    std::cout << "Initialising parameterised constructor" << "\n";
     _image = new wxBitmap(filename, wxBITMAP_TYPE_PNG);
 }
 

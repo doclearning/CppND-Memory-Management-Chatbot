@@ -1,6 +1,9 @@
 #ifndef CHATGUI_H_
 #define CHATGUI_H_
 
+#include <memory>
+#include <string>
+
 #include <wx/wx.h>
 
 class ChatLogic; // forward declaration
@@ -16,7 +19,7 @@ private:
     //// STUDENT CODE
     ////
 
-    ChatLogic *_chatLogic;
+    std::unique_ptr<ChatLogic> _chatLogic;
 
     ////
     //// EOF STUDENT CODE
@@ -27,7 +30,10 @@ public:
     ~ChatBotPanelDialog();
 
     // getter / setter
-    ChatLogic *GetChatLogicHandle() { return _chatLogic; }
+
+    //JAQ_NOTE: Wrapped the functions here, as it doesn't seem to make sense to me to pass around the unique_ptr
+    void SendMessageToChatbot(std::string &&message);
+    wxBitmap* GetImageFromChatbot();
 
     // events
     void paintEvent(wxPaintEvent &evt);
