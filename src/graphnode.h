@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <memory>
 #include "chatbot.h"
 
 
@@ -18,7 +19,7 @@ private:
     //JAQ_ISSUE: These child edges will be owned by a graphnode. Currently handled in chatlogic?
 
     // data handles (owned)
-    std::vector<GraphEdge *> _childEdges;  // edges to subsequent nodes
+    std::vector<std::unique_ptr<GraphEdge>> _childEdges;  // edges to subsequent nodes
 
     // data handles (not owned)
     std::vector<GraphEdge *> _parentEdges; // edges to preceding nodes 
@@ -45,8 +46,8 @@ public:
 
     // proprietary functions
     void AddToken(std::string token); // add answers to list
-    void AddEdgeToParentNode(GraphEdge *edge);
-    void AddEdgeToChildNode(GraphEdge *edge);
+    void AddParentEdge(GraphEdge *edge);
+    void AddChildEdge(std::unique_ptr<GraphEdge> edge);
 
     //// STUDENT CODE
     ////
