@@ -45,14 +45,12 @@ ChatLogic::~ChatLogic()
     //     delete *it;
     // }
     for(auto &element : _nodes){
-
         element.reset();
     }
 
-    // delete all edges
-    for (auto it = std::begin(_edges); it != std::end(_edges); ++it)
-    {
-        delete *it;
+    //JAQ_TODO:Remove this, as we will be relinquishing control of the unique_ptrs
+    for(auto &element : _edges){
+        element.reset();
     }
 
     ////
@@ -170,17 +168,19 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
                             auto childNode = std::find_if(_nodes.begin(), _nodes.end(), [&childToken](std::unique_ptr<GraphNode>& node)  { return node->GetID() == std::stoi(childToken->second); });
 
                             // create new edge
-                            GraphEdge *edge = new GraphEdge(id);
+                            auto edge = std::make_unique<GraphEdge>(id);
                             edge->SetChildNode(childNode->get());
                             edge->SetParentNode(parentNode->get());
-                            _edges.push_back(edge);
-
+                            
                             // find all keywords for current node
                             AddAllTokensToElement("KEYWORD", tokens, *edge);
 
+                            //JAQ_TODO:move the edge to the parent, and add a reference/pointer to the child (i think that way round)
                             // store reference in child node and parent node
-                            (*childNode)->AddEdgeToParentNode(edge);
-                            (*parentNode)->AddEdgeToChildNode(edge);
+                            (*childNode)->AddEdgeToParentNode(edge.get());
+                            (*parentNode)->AddEdgeToChildNode(edge.get());
+
+                            _edges.push_back(std::move(edge));
                         }
 
                         ////
