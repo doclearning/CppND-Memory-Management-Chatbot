@@ -34,7 +34,80 @@ ChatBot::~ChatBot()
 }
 
 //// STUDENT CODE
-////
+//// 
+
+//Copy constructor - shallow copy except for bitmap
+ChatBot::ChatBot(const ChatBot &source) :
+    _image{new wxBitmap{*(source._image)}},
+    _currentNode{source._currentNode},
+    _rootNode{source._rootNode},
+    _chatLogic{source._chatLogic}
+{
+    std::cout << "CopyCtor: instance " << &source << " to instance " << this << "\n";
+}
+
+//Copy assignment operator - shallow copy except for bitmap
+ChatBot& ChatBot::operator=(const ChatBot &source){
+    
+    std::cout << "CopyOp: instance " << &source << " to instance " << this << "\n";
+
+    if(this == &source)
+        return *this;
+    
+    delete _image;
+    _image = nullptr;
+    _image = new wxBitmap{*(source._image)};
+
+    _currentNode = source._currentNode;
+    _rootNode = source._rootNode;
+    _chatLogic = source._chatLogic;
+
+    return *this;
+}
+
+//Move constructor - move all
+ChatBot::ChatBot(ChatBot &&source):
+    _image{source._image},
+    _currentNode{source._currentNode},
+    _rootNode{source._rootNode},
+    _chatLogic{source._chatLogic}    
+{
+    std::cout << "MoveCtor: instance " << &source << " to instance " << this << "\n";
+
+    source._image = nullptr;
+    source._currentNode = nullptr;
+    source._rootNode = nullptr;
+    source._chatLogic = nullptr;
+
+}
+
+//Move assignment operator - move all
+ChatBot& ChatBot::operator=(ChatBot &&source){
+
+    std::cout << "MoveOp: instance " << &source << " to instance " << this << "\n";
+
+    if(this == &source)
+        return *this;
+
+    delete _image;
+    _image = source._image;
+    source._image = nullptr;
+
+    delete _currentNode;
+    _currentNode = source._currentNode;
+    source._currentNode = nullptr;
+
+    delete _rootNode;
+    _rootNode = source._rootNode;
+    source._rootNode = nullptr;
+
+    delete _chatLogic;
+    _chatLogic = source._chatLogic;
+    source._chatLogic = nullptr;
+
+    return *this;
+}
+
 
 ////
 //// EOF STUDENT CODE
