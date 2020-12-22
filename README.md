@@ -1,8 +1,8 @@
 # CPPND: Memory Management Chatbot
 
-## Todo
+## Future work
 
-- Not really sure I like the raw pointers getting passed around as much as they are to get around the unique_ptrs being exclusively owned by chatlolgic (nodes), and GraphNodes (edges). Consider another solution.
+- Far too many raw pointers getting passed around, whether referring to unique_ptrs, or even stack memory that has to be updated. I hate it.
 
 
 ## Intro
