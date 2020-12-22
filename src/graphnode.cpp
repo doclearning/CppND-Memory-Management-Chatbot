@@ -12,9 +12,9 @@ GraphNode::~GraphNode()
 {
     //// STUDENT CODE (modified)
     ////
-    // for(auto &element : _childEdges){
-    //     element.reset();
-    // }
+    for(auto &element : _childEdges){
+        element.reset();
+    }
 
     ////
     //// EOF STUDENT CODE
@@ -40,7 +40,7 @@ void GraphNode::AddChildEdge(std::unique_ptr<GraphEdge> edge)
 void GraphNode::MoveChatbotHere(ChatBot chatbotIn)
 {
     chatBot = std::move(chatbotIn);
-    //chatBot.SetCurrentNode(this);
+    chatBot.SetCurrentNode(this);
 }
 
 void GraphNode::MoveChatbotToNewNode(GraphNode *newNode)

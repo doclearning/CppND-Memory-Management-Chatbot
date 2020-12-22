@@ -31,7 +31,7 @@ public:
 
     // getter / setter
 
-    //JAQ_NOTE: Wrapped the functions here, as it doesn't seem to make sense to me to pass around the unique_ptr
+    //JAQ_NOTE: Wrapped the functions here, as it doesn't seem to make sense to me to pass around the unique_ptr or convert to a raw
     void SendMessageToChatbot(std::string &&message);
     wxBitmap* GetImageFromChatbot();
 

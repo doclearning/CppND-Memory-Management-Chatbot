@@ -150,11 +150,8 @@ ChatBotPanelDialog::~ChatBotPanelDialog()
 
 void ChatBotPanelDialog::AddDialogItem(wxString text, bool isFromUser)
 {
-    std::cout << "AddDialogItem called\n";
     // add a single dialog element to the sizer
     ChatBotPanelDialogItem *item = new ChatBotPanelDialogItem(this, text, isFromUser);
-
-    std::cout << "AddDialogItem rendered\n";
 
     _dialogSizer->Add(item, 0, wxALL | (isFromUser == true ? wxALIGN_LEFT : wxALIGN_RIGHT), 8);
     _dialogSizer->Layout();
@@ -175,8 +172,6 @@ void ChatBotPanelDialog::AddDialogItem(wxString text, bool isFromUser)
 
 void ChatBotPanelDialog::PrintChatbotResponse(std::string response)
 {
-    std::cout << "ChatBotPanelDialog::PrintChatbotResponse: called\n";
-
     // convert string into wxString and add dialog element
     wxString botText(response.c_str(), wxConvUTF8);
     
