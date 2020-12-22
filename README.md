@@ -1,5 +1,13 @@
 # CPPND: Memory Management Chatbot
 
+## Todo
+
+- Not really sure I like the raw pointers getting passed around as much as they are to get around the unique_ptrs being exclusively owned by chatlolgic (nodes), and GraphNodes (edges). Consider another solution.
+
+
+## Intro
+
+
 This is the project for the third course in the [Udacity C++ Nanodegree Program](https://www.udacity.com/course/c-plus-plus-nanodegree--nd213): Memory Management.
 
 <img src="images/chatbot_demo.gif"/>

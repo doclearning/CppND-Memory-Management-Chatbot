@@ -33,7 +33,7 @@ ChatBot::~ChatBot()
     }
 }
 
-//// STUDENT CODE
+//// STUDENT CODE (modified)
 //// 
 
 //Copy constructor - shallow copy except for bitmap

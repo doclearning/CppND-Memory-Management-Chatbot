@@ -8,9 +8,11 @@ GraphNode::GraphNode(int id)
 
 GraphNode::~GraphNode()
 {
-    //// STUDENT CODE
+    //// STUDENT CODE (modified)
     ////
-
+    for(auto &element : _childEdges){
+        element.reset();
+    }
 
     ////
     //// EOF STUDENT CODE
@@ -49,7 +51,7 @@ void GraphNode::MoveChatbotToNewNode(GraphNode *newNode)
 
 GraphEdge *GraphNode::GetChildEdgeAtIndex(int index)
 {
-    //// STUDENT CODE
+    //// STUDENT CODE (modified)
     ////
 
     return _childEdges[index].get();

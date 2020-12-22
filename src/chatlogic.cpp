@@ -14,7 +14,7 @@
 
 ChatLogic::ChatLogic()
 {
-    //// STUDENT CODE
+    //// STUDENT CODE (modified)
     ////
 
     // create instance of chatbot
@@ -29,7 +29,7 @@ ChatLogic::ChatLogic()
 
 ChatLogic::~ChatLogic()
 {
-    //// STUDENT CODE
+    //// STUDENT CODE (modified)
     ////
 
     // delete chatbot instance
@@ -131,7 +131,7 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
                     // node-based processing
                     if (type->second == "NODE")
                     {
-                        //// STUDENT CODE
+                        //// STUDENT CODE (modified)
                         ////
 
                         // check if node with this ID exists already
@@ -154,7 +154,7 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
                     // edge-based processing
                     if (type->second == "EDGE")
                     {
-                        //// STUDENT CODE
+                        //// STUDENT CODE (modified)
                         ////
 
                         // find tokens for incoming (parent) and outgoing (child) node
@@ -175,7 +175,6 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
                             // find all keywords for current node
                             AddAllTokensToElement("KEYWORD", tokens, *edge);
 
-                            //JAQ_TODO:move the edge to the parent, and add a reference/pointer to the child (i think that way round)
                             // store reference in child node and parent node
                             (*childNode)->AddParentEdge(edge.get());
                             (*parentNode)->AddChildEdge(std::move(edge));
