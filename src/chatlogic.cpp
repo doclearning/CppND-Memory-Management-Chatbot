@@ -18,10 +18,10 @@ ChatLogic::ChatLogic()
     ////
 
     // create instance of chatbot
-    _chatBot = new ChatBot("../images/chatbot.png");
+    //_chatBot = new ChatBot("../images/chatbot.png");
 
     // add pointer to chatlogic so that chatbot answers can be passed on to the GUI
-    _chatBot->SetChatLogicHandle(this); //JAQ_ISSUE: This seems weird to throw around the raw pointer here. I don't like it.
+    //_chatBot->SetChatLogicHandle(this); //JAQ_ISSUE: This seems weird to throw around the raw pointer here. I don't like it.
 
     ////
     //// EOF STUDENT CODE
@@ -37,16 +37,18 @@ ChatLogic::~ChatLogic()
     //This may need rethinking if ownership is passed to nodes with a unique_ptr
     //In each node, possibly switch to if unique_ptr.valid() -> destroy
     //probably also means that _chatbout should be created in the root node
-    delete _chatBot;
+    //delete _chatBot;
+
+    //JAQ_TODO: add these back in.
 
     // delete all nodes
     // for (auto it = std::begin(_nodes); it != std::end(_nodes); ++it)
     // {
     //     delete *it;
     // }
-    for(auto &element : _nodes){
-        element.reset();
-    }
+    // for(auto &element : _nodes){
+    //     element.reset();
+    // }
 
     //JAQ_TODO:Remove this, as we will be relinquishing control of the unique_ptrs
     // for(auto &element : _edges){
@@ -169,8 +171,8 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
 
                             // create new edge
                             auto edge = std::make_unique<GraphEdge>(id);
-                            edge->SetChildNode(childNode->get());
-                            edge->SetParentNode(parentNode->get());
+                            edge->SetChildNode((*childNode).get()); //JAQ_TODO: childNode->get()
+                            edge->SetParentNode((*parentNode).get()); //JAQ_TODO: parentNode->get()
 
                             // find all keywords for current node
                             AddAllTokensToElement("KEYWORD", tokens, *edge);
@@ -178,8 +180,6 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
                             // store reference in child node and parent node
                             (*childNode)->AddParentEdge(edge.get());
                             (*parentNode)->AddChildEdge(std::move(edge));
-
-                            //_edges.push_back();
                         }
 
                         ////
@@ -226,9 +226,12 @@ void ChatLogic::LoadAnswerGraphFromFile(std::string filename)
         }
     }
 
-    // add chatbot to graph root node
-    _chatBot->SetRootNode(rootNode);
-    rootNode->MoveChatbotHere(_chatBot);
+    ChatBot chatBot("../images/chatbot.png");
+    SetChatbotHandle(&chatBot);
+    chatBot.SetChatLogicHandle(this);
+    chatBot.SetRootNode(rootNode);
+
+    rootNode->MoveChatbotHere(std::move(chatBot));
     
     ////
     //// EOF STUDENT CODE
@@ -251,7 +254,10 @@ void ChatLogic::SendMessageToChatbot(std::string message)
 
 void ChatLogic::SendMessageToUser(std::string message)
 {
+
+    std::cout << "ChatLogic::SendMessageToUser: called\n";
     _panelDialog->PrintChatbotResponse(message);
+    std::cout << "ChatLogic::SendMessageToUser: PrintChatbotResponseDone\n";
 }
 
 wxBitmap *ChatLogic::GetImageFromChatbot()

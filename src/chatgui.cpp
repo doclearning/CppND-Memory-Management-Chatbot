@@ -104,7 +104,7 @@ EVT_PAINT(ChatBotPanelDialog::paintEvent) // catch paint events
 END_EVENT_TABLE()
 
 ChatBotPanelDialog::ChatBotPanelDialog(wxWindow *parent, wxWindowID id)
-    : wxScrolledWindow(parent, id), _chatLogic(std::make_unique<ChatLogic>())
+    : wxScrolledWindow(parent, id)/*, _chatLogic(std::make_unique<ChatLogic>())*/
 {
     // sizer will take care of determining the needed scroll size
     _dialogSizer = new wxBoxSizer(wxVERTICAL);
@@ -115,15 +115,15 @@ ChatBotPanelDialog::ChatBotPanelDialog(wxWindow *parent, wxWindowID id)
 
     //// STUDENT CODE
     ////
+    
+    _chatLogic = std::make_unique<ChatLogic>();
 
     // pass pointer to chatbot dialog so answers can be displayed in GUI
     _chatLogic->SetPanelDialogHandle(this);
 
     // load answer graph from file
-    _chatLogic.get()->LoadAnswerGraphFromFile(dataPath + "src/answergraph.txt");
+    _chatLogic->LoadAnswerGraphFromFile(dataPath + "src/answergraph.txt");
 
-
-    std::cout << "ChatBotPanelDialog complete" << "\n";
     ////
     //// EOF STUDENT CODE
 }
@@ -142,7 +142,7 @@ ChatBotPanelDialog::~ChatBotPanelDialog()
     //// STUDENT CODE
     ////
 
-    _chatLogic.reset();
+    //_chatLogic.reset();
 
     ////
     //// EOF STUDENT CODE
@@ -150,8 +150,12 @@ ChatBotPanelDialog::~ChatBotPanelDialog()
 
 void ChatBotPanelDialog::AddDialogItem(wxString text, bool isFromUser)
 {
+    std::cout << "AddDialogItem called\n";
     // add a single dialog element to the sizer
     ChatBotPanelDialogItem *item = new ChatBotPanelDialogItem(this, text, isFromUser);
+
+    std::cout << "AddDialogItem rendered\n";
+
     _dialogSizer->Add(item, 0, wxALL | (isFromUser == true ? wxALIGN_LEFT : wxALIGN_RIGHT), 8);
     _dialogSizer->Layout();
 
@@ -165,12 +169,17 @@ void ChatBotPanelDialog::AddDialogItem(wxString text, bool isFromUser)
     this->GetScrollPixelsPerUnit(&dx, &dy);
     int sy = dy * this->GetScrollLines(wxVERTICAL);
     this->DoScroll(0, sy);
+
+    
 }
 
 void ChatBotPanelDialog::PrintChatbotResponse(std::string response)
 {
+    std::cout << "ChatBotPanelDialog::PrintChatbotResponse: called\n";
+
     // convert string into wxString and add dialog element
     wxString botText(response.c_str(), wxConvUTF8);
+    
     AddDialogItem(botText, false);
 }
 
